@@ -1,0 +1,35 @@
+{
+    "version": "5.0.6",
+    "description": "Open-source terminal AI coding agent.",
+    "homepage": "https://atomgit.com/atomgit_atomcode/atomcode",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://atomgit.com/atomgit_atomcode/atomcode/releases/download/v5.0.6/atomcode-v5.0.6-windows-x64.exe#/atomcode.exe",
+            "hash": "13785bf52d82edc86ac5720f1b9fc1e5f596cd3b03cae8ea6c30f9117f9b8ec3"
+        }
+    },
+    "bin": "atomcode.exe",
+    "post_install": "& \"$bucketsdir\\$bucket\\scripts\\atomcode\\disable-auto-update.ps1\"",
+    "notes": [
+        "自更新已通过 post_install 脚本关闭（auto_update = false），版本由 scoop 统一管理。",
+        "如需重新开启自更新，编辑 %USERPROFILE%\\.atomcode\\config.toml 将 auto_update 改为 true。",
+        "配置与数据保存在 %USERPROFILE%\\.atomcode（或 $ATOMCODE_HOME），卸载时不会删除，请放心。"
+    ],
+    "checkver": {
+        "url": "https://raw.atomgit.com/atomgit_atomcode/atomcode/raw/main/latest.json",
+        "jsonpath": "$.version",
+        "regex": "v([\\d.]+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://atomgit.com/atomgit_atomcode/atomcode/releases/download/v$version/atomcode-v$version-windows-x64.exe#/atomcode.exe",
+                "hash": {
+                    "url": "https://raw.atomgit.com/atomgit_atomcode/atomcode/raw/main/latest.json",
+                    "jsonpath": "$.binaries['windows-x64'].sha256"
+                }
+            }
+        }
+    }
+}
