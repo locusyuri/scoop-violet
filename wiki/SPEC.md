@@ -546,3 +546,26 @@ script 也可为多行数组：
    scoop update <应用名>    # 触发 checkver/autoupdate 验证
    ```
    也可用任何 JSON 解析器做静态校验（如 `bunx jsonlint`、PowerShell 的 `ConvertFrom-Json`）。
+
+## 11. 本仓库目录结构约定
+
+本仓库（scoop-violet）按 scoop bucket 标准布局组织：
+
+| 目录 | 用途 | 说明 |
+| --- | --- | --- |
+| `bucket/` | **manifest（`<应用名>.json`）存放目录** | 新增应用时在此目录写 JSON，文件名即应用名 |
+| `scripts/` | 安装辅助脚本 | 供 manifest 的 `pre_install`/`post_install` 等字段调用，按应用分子目录（如 `scripts/atomcode/`） |
+| `bin/` | 本仓库自带的辅助可执行文件/脚本 | 仓库维护工具等 |
+| `wiki/` | 文档 | `SPEC.md` 即本规范 |
+| `ref/` | 参考材料（只读） | 外部仓库克隆（scoop-cn、atomcode 源码），仅作调研参考，不纳入 bucket |
+
+约定：
+
+1. **新应用一律在 `bucket/` 下写 manifest**，不要放在仓库根目录。
+2. **脚本引用路径**：manifest 中引用 `scripts/` 下的脚本时，用 `"$bucketsdir\\$bucket\\scripts\\<应用>\\<脚本>.ps1"` 形式（`$bucket` 为安装时的 bucket 名，如 `scoop bucket add violet <url>` 后 `$bucket` 为 `violet`）。示例（见 `bucket/atomcode.json`）：
+   ```json
+   "post_install": "& \"$bucketsdir\\$bucket\\scripts\\atomcode\\disable-auto-update.ps1\""
+   ```
+3. **应用自带脚本**：每个应用若有配套脚本，放在 `scripts/<应用名>/` 下，与 manifest 同名应用对应。
+4. **post_install 中的用户态配置修改**：如需修改 `%USERPROFILE%` 下的用户配置（如关闭应用自更新），务必只做行级修改/追加，禁止整体覆盖（配置文件可能含 API 密钥等敏感信息），并优先遵循应用自身的 `$ATOMCODE_HOME` 等环境变量约定。
+5. **卸载行为**：manifest 默认不写 `uninstaller`/`post_uninstall` 清理用户数据（如 `~/.atomcode`），交由用户自行决定；如官方卸载脚本会删除用户数据，切勿在 manifest 中调用。
