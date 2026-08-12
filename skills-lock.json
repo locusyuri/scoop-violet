@@ -105,6 +105,18 @@
       "sourceType": "git",
       "skillPath": "skills/cnb-upload-attachment/SKILL.md",
       "computedHash": "725d7e61f6dca227f7895941f4ec26ba984b08c832932944500b6c5d2e393996"
+    },
+    "scoop-check": {
+      "source": "microsoft/researchstudio",
+      "sourceType": "github",
+      "skillPath": "ResearchStudio-Idea/skills/scoop_check/SKILL.md",
+      "computedHash": "2836d0dd8f2ef69b473f059f3b2131b870907f0f1c28dcc43091d9f727235f15"
+    },
+    "scoop-skills": {
+      "source": "entr0pia/scoop-skills",
+      "sourceType": "github",
+      "skillPath": "skills/scoop-skills/SKILL.md",
+      "computedHash": "9534a355b95ba3d9907277330488a0b2e5738ad6f390655ac1547a6131d704ce"
     }
   }
 }

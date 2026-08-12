@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "block-backup-yml": {
+      "event": "PreToolUse",
+      "matcher": "edit_*|write_*",
+      "command": "powershell -NoProfile -File \"C:/Repos/scoop-violet/.agents/hooks/block-backup-yml.ps1\"",
+      "timeout_ms": 5000
+    },
+    "validate-bucket-json": {
+      "event": "PostToolUse",
+      "matcher": "edit_*|write_*",
+      "command": "powershell -NoProfile -File \"C:/Repos/scoop-violet/.agents/hooks/validate-bucket-json.ps1\"",
+      "timeout_ms": 5000
+    }
+  }
+}
