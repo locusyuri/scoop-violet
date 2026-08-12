@@ -56,13 +56,35 @@ scoop-violet/
 ## 仓库说明
 
 - 主仓库托管在 CNB（cnb.cool），自动化（CI/更新任务）均在此配置（`.cnb.yml`）；
-- GitHub 仓库仅作备份，不做自动化；
-- 两个仓库都推送时：
+- GitHub 仓库仅作**备份**：CNB 定时任务更新 manifest 后自动同步到 GitHub，`push` 到 cnb 也会自动同步；
+- 手动推送两个仓库：
 
 ```powershell
 git push origin main   # cnb 主仓库
 git push github main   # GitHub 备份
 ```
+
+## GitHub 备份自动化（需配置一次）
+
+`.cnb.yml` 中的自动同步依赖 CNB **密钥仓库**注入 GitHub 访问令牌（`GH_TOKEN`），不会明文写入本仓库。首次配置步骤：
+
+1. **创建 GitHub PAT**：<https://github.com/settings/tokens>，勾选 `repo` 权限，生成后复制（只显示一次）。
+2. **创建 CNB 密钥仓库**：在 CNB 新建一个私有仓库（如 `scoop-secrets`），添加文件 `backup.yml`，内容：
+   ```yaml
+   GH_TOKEN: <你的 GitHub PAT>
+   ```
+3. **授权本仓库引用**：在 `backup.yml` 顶部加入（CNB 密钥引用范围控制）：
+   ```yaml
+   allow_slugs: "catmono/scoop-violet"
+   allow_branches:
+     - main
+   ```
+4. **更新 `.cnb.yml`**：把文件头注释与两处 `imports` 中的占位符 `<你的组织>/<密钥仓库>` 替换为实际值，如：
+   ```yaml
+   imports:
+     - https://cnb.cool/catmono/scoop-secrets/-/blob/main/backup.yml
+   ```
+5. 推送 `.cnb.yml` 后，手动触发一次流水线验证：更新任务或 `push` 事件应能成功推到 `github.com/locusyuri/scoop-violet`。
 
 ## 许可
 

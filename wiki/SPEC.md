@@ -594,3 +594,27 @@ script 也可为多行数组：
 2. 版本号不带 `v` 前缀（脚本会自动剥离 `tag_name`/`jsonpath` 值里的 `v`），URL 中的 `v` 由模板自行保留（如 `.../download/v$version/...`）。
 3. 更新后请用 `python3 scripts/update.py --dry-run` 本地验证（不写回文件），确认输出 `OK <应用>: up to date (<版本>)` 或按预期更新。
 4. 若某个应用的更新逻辑特殊（无法用上述形式表达），再考虑为该应用单独提供脚本并在此说明原因——这是例外而非惯例。
+
+## 13. GitHub 备份自动化
+
+cnb.cool 为主仓库（自动化），GitHub 仅作备份。`.cnb.yml` 中配置了两种自动同步：
+
+| 时机 | 行为 |
+| --- | --- |
+| 定时任务更新 manifest 后 | 先 push 到 cnb 主仓库，再 push 到 `github.com/locusyuri/scoop-violet` |
+| 任意 `push` 事件 | 校验所有 manifest 后，将当前 commit 同步到 GitHub 备份 |
+
+同步依赖 CNB **密钥仓库**注入的 `GH_TOKEN`（GitHub Personal Access Token，`repo` 权限），通过 `imports` 引用，**不得**将令牌明文写入本仓库或 manifest。
+
+配置步骤（一次性，详见 README「GitHub 备份自动化」）：
+
+1. GitHub 创建 PAT（勾选 `repo` 权限）；
+2. CNB 新建私有密钥仓库，添加 `backup.yml`：`GH_TOKEN: <PAT>`；
+3. 在 `backup.yml` 顶部声明引用范围：`allow_slugs: "catmono/scoop-violet"`、`allow_branches: [main]`；
+4. 把 `.cnb.yml` 中两处 `imports` 占位符替换为密钥仓库实际 URL；
+5. push 后手动触发一次流水线验证备份同步。
+
+约定：
+
+- 新增流水线如需 GitHub 写权限，一律通过 `imports` 注入密钥，禁止硬编码；
+- 密钥文件权限收紧：`allow_slugs` 限定本仓库、`allow_branches` 限定 `main`，避免密钥被其他仓库/分支引用。
