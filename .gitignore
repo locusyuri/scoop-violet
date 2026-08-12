@@ -3,3 +3,6 @@ ref/
 
 # AI
 .atomcode
+
+# 密钥文件（复制到 catmono/secrets 密钥仓库后删除，切勿提交）
+backup.yml

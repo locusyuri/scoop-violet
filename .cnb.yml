@@ -3,9 +3,7 @@
 # 说明：cnb.cool 为主仓库，自动化全部在此执行；GitHub 仅作备份（自动同步）。
 #
 # GitHub 备份依赖密钥仓库注入 GH_TOKEN（GitHub Personal Access Token，需 repo 权限）。
-# 密钥仓库地址为占位符，请替换为你自己的密钥仓库（见 README「GitHub 备份自动化」）：
-#   imports:
-#     - https://cnb.cool/<你的组织>/<密钥仓库>/-/blob/main/backup.yml
+# 密钥仓库：catmono/secrets（backup.yml 已由仓库所有者手动复制过去）。
 main:
   # ── 定时任务：每日 03:00 / 15:00（Asia/Shanghai）检查应用更新 ──
   # 最小间隔 5 分钟；执行身份为最后修改本配置的用户；流水线内置 CNB_TOKEN 可写回本仓库。
@@ -14,7 +12,7 @@ main:
       docker:
         image: python:3-slim
       imports:
-        - https://cnb.cool/<你的组织>/<密钥仓库>/-/blob/main/backup.yml
+        - https://cnb.cool/catmono/secrets/-/blob/main/backup.yml
       stages:
         - name: install-git
           script: apt-get update && apt-get install -y git >/dev/null
@@ -39,7 +37,7 @@ main:
       docker:
         image: python:3-slim
       imports:
-        - https://cnb.cool/<你的组织>/<密钥仓库>/-/blob/main/backup.yml
+        - https://cnb.cool/catmono/secrets/-/blob/main/backup.yml
       stages:
         - name: install-git
           script: apt-get update && apt-get install -y git >/dev/null
