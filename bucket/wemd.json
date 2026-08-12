@@ -1,0 +1,35 @@
+{
+    "version": "1.4.4",
+    "description": "更优雅的 Markdown 公众号排版工具",
+    "homepage": "https://wemd.app",
+    "license": "MIT",
+    "url": "https://github.com/tenngoxars/WeMD/releases/download/v1.4.4/WeMD%20Setup%201.4.4.exe#/setup.exe",
+    "hash": "0b279333dfe94335160e940769d8488b5fab87dfe900901502a7ac731b04bc3d",
+    "installer": {
+        "script": "Start-Process -Wait -FilePath \"$dir\\setup.exe\" -ArgumentList \"/S /D=$dir\""
+    },
+    "uninstaller": {
+        "script": "Start-Process -Wait -FilePath \"$dir\\Uninstall WeMD.exe\" -ArgumentList \"/S _?=$dir\""
+    },
+    "bin": "WeMD.exe",
+    "shortcuts": [
+        [
+            "WeMD.exe",
+            "WeMD"
+        ]
+    ],
+    "notes": [
+        "WeMD 数据目录固定为 %APPDATA%\\WeMD，卸载时不会删除，请放心。",
+        "本应用通过 NSIS 安装器安装到 scoop 目录，更新由 scoop 统一管理。"
+    ],
+    "checkver": {
+        "github": "tenngoxars/WeMD"
+    },
+    "autoupdate": {
+        "url": "https://github.com/tenngoxars/WeMD/releases/download/v$version/WeMD%20Setup%20$version.exe#/setup.exe",
+        "hash": {
+            "url": "https://github.com/tenngoxars/WeMD/releases/expanded_assets/v$version",
+            "regex": "WeMD Setup $version\\.exe[\\s\\S]*?sha256:([a-f0-9]{64})"
+        }
+    }
+}

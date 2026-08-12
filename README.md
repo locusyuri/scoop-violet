@@ -10,6 +10,7 @@
 | 应用 | 版本 | 说明 |
 | --- | --- | --- |
 | [atomcode](https://atomgit.com/atomgit_atomcode/atomcode) | 5.0.6 | 开源终端 AI 编程助手（安装时自动关闭其内置自更新，交由 scoop 统一管理） |
+| [wemd](https://wemd.app) | 1.4.4 | 更优雅的 Markdown 公众号排版工具（NSIS 安装到 scoop 目录，数据保存在 %APPDATA%\WeMD） |
 
 ## 使用方法
 
