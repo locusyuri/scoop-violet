@@ -569,3 +569,28 @@ script 也可为多行数组：
 3. **应用自带脚本**：每个应用若有配套脚本，放在 `scripts/<应用名>/` 下，与 manifest 同名应用对应。
 4. **post_install 中的用户态配置修改**：如需修改 `%USERPROFILE%` 下的用户配置（如关闭应用自更新），务必只做行级修改/追加，禁止整体覆盖（配置文件可能含 API 密钥等敏感信息），并优先遵循应用自身的 `$ATOMCODE_HOME` 等环境变量约定。
 5. **卸载行为**：manifest 默认不写 `uninstaller`/`post_uninstall` 清理用户数据（如 `~/.atomcode`），交由用户自行决定；如官方卸载脚本会删除用户数据，切勿在 manifest 中调用。
+
+## 12. 自动更新约定（新增软件不需要写脚本）
+
+本仓库的自动更新由 **一个通用脚本** `scripts/update.py` 驱动（CNB 定时任务调用，见 `.cnb.yml`）。它遍历 `bucket/*.json`，**完全依据每个 manifest 自带的 `checkver` / `autoupdate` 字段**检查版本并改写 `version`/`url`/`hash`。
+
+**新增软件只需要在 manifest 里写好 `checkver` 和 `autoupdate`，无需编写任何专用脚本。**
+
+通用脚本支持的写法（务必在 manifest 中使用这些形式，否则无法自动更新）：
+
+| 场景 | manifest 写法 |
+| --- | --- |
+| 版本来自 GitHub release tag | `"checkver": "github"`（需 `homepage` 为 GitHub 仓库页）或 `"checkver": {"github": "<owner/repo>"}` |
+| 版本来自网页正则 | `"checkver": {"url": "...", "regex": "Version ([\\d.]+)"}` |
+| 版本来自 JSON（推荐，最稳） | `"checkver": {"url": "...", "jsonpath": "$.version", "regex": "v([\\d.]+)"}` |
+| URL 模板 | `"autoupdate": {"url": "...$version..."}`，`$cleanVersion` 为去点版本号 |
+| 按架构更新 | `"autoupdate": {"architecture": {"64bit": {"url": "..."}, "32bit": {"url": "..."}}}` |
+| 自动抓取 hash | `"hash": {"url": "...", "jsonpath": "$.binaries['windows-x64'].sha256"}` 或 `"hash": {"url": "...", "regex": "$sha256"}` |
+| checkver 命名组 | regex 中用 `(?<build>\\d+)` 等命名组，`autoupdate` 中可用 `$matchBuild` |
+
+要点：
+
+1. **`checkver` 与 `autoupdate` 必须成对出现**，缺一不可（通用脚本两者都要读）。
+2. 版本号不带 `v` 前缀（脚本会自动剥离 `tag_name`/`jsonpath` 值里的 `v`），URL 中的 `v` 由模板自行保留（如 `.../download/v$version/...`）。
+3. 更新后请用 `python3 scripts/update.py --dry-run` 本地验证（不写回文件），确认输出 `OK <应用>: up to date (<版本>)` 或按预期更新。
+4. 若某个应用的更新逻辑特殊（无法用上述形式表达），再考虑为该应用单独提供脚本并在此说明原因——这是例外而非惯例。
