@@ -31,21 +31,3 @@ main:
               git push "https://x-access-token:${GH_TOKEN}@github.com/locusyuri/scoop-violet.git" main
             fi
 
-  # ── push 事件：校验 manifest 合法性，并同步备份到 GitHub ──
-  push:
-    - name: validate-and-sync
-      docker:
-        image: python:3-slim
-      imports:
-        - https://cnb.cool/catmono/secrets/-/blob/main/backup.yml
-      stages:
-        - name: install-git
-          script: apt-get update && apt-get install -y git >/dev/null
-        - name: check-json
-          script: |
-            python3 -c "import json,glob; [json.load(open(f, encoding='utf-8')) for f in glob.glob('bucket/*.json')]; print('all manifests OK')"
-        - name: sync-github
-          script: |
-            git config user.name "scoop-violet bot"
-            git config user.email "bot@cnb.cool"
-            git push "https://x-access-token:${GH_TOKEN}@github.com/locusyuri/scoop-violet.git" HEAD:main
