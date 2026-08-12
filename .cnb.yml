@@ -1,0 +1,53 @@
+# scoop-violet 云原生构建配置（CNB）
+# 文档：https://docs.cnb.cool/zh/build/grammar.html
+# 说明：cnb.cool 为主仓库，自动化全部在此执行；GitHub 仅作备份（自动同步）。
+#
+# GitHub 备份依赖密钥仓库注入 GH_TOKEN（GitHub Personal Access Token，需 repo 权限）。
+# 密钥仓库地址为占位符，请替换为你自己的密钥仓库（见 README「GitHub 备份自动化」）：
+#   imports:
+#     - https://cnb.cool/<你的组织>/<密钥仓库>/-/blob/main/backup.yml
+main:
+  # ── 定时任务：每日 03:00 / 15:00（Asia/Shanghai）检查应用更新 ──
+  # 最小间隔 5 分钟；执行身份为最后修改本配置的用户；流水线内置 CNB_TOKEN 可写回本仓库。
+  "crontab: 0 3,15 * * *":
+    - name: auto-update-manifests
+      docker:
+        image: python:3-slim
+      imports:
+        - https://cnb.cool/<你的组织>/<密钥仓库>/-/blob/main/backup.yml
+      stages:
+        - name: install-git
+          script: apt-get update && apt-get install -y git >/dev/null
+        - name: update-and-push
+          script: |
+            python3 scripts/update.py
+            if git diff --quiet -- bucket/; then
+              echo "no manifest changes, skip commit"
+            else
+              git config user.name "scoop-violet bot"
+              git config user.email "bot@cnb.cool"
+              git add bucket/
+              git commit -m "chore: 自动更新应用清单"
+              git push "https://cnb:${CNB_TOKEN}@cnb.cool/catmono/scoop-violet.git" main
+              # 备份到 GitHub（x-access-token 为 GitHub 固定用户名，GH_TOKEN 为 PAT）
+              git push "https://x-access-token:${GH_TOKEN}@github.com/locusyuri/scoop-violet.git" main
+            fi
+
+  # ── push 事件：校验 manifest 合法性，并同步备份到 GitHub ──
+  push:
+    - name: validate-and-sync
+      docker:
+        image: python:3-slim
+      imports:
+        - https://cnb.cool/<你的组织>/<密钥仓库>/-/blob/main/backup.yml
+      stages:
+        - name: install-git
+          script: apt-get update && apt-get install -y git >/dev/null
+        - name: check-json
+          script: |
+            python3 -c "import json,glob; [json.load(open(f, encoding='utf-8')) for f in glob.glob('bucket/*.json')]; print('all manifests OK')"
+        - name: sync-github
+          script: |
+            git config user.name "scoop-violet bot"
+            git config user.email "bot@cnb.cool"
+            git push "https://x-access-token:${GH_TOKEN}@github.com/locusyuri/scoop-violet.git" HEAD:main
