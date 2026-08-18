@@ -160,26 +160,43 @@ def _fetch_hash(hash_conf, version: str, clean: str, matches: dict) -> str:
 
 
 def _apply_entry(entry: dict, version: str, clean: str, matches: dict):
-    """更新单条 url/hash 配置（可能是顶层 url，或 architecture 下某架构）。"""
+    """渲染单条 url/extract_dir/hash 配置（可能是顶层，或 architecture 下某架构）。"""
     if entry.get("url"):
         entry["url"] = render(entry["url"], version, clean, matches)
+    if entry.get("extract_dir"):
+        entry["extract_dir"] = render(entry["extract_dir"], version, clean, matches)
     hash_conf = entry.get("hash")
     if isinstance(hash_conf, dict):
         entry["hash"] = _fetch_hash(hash_conf, version, clean, matches)
 
 
 def apply_autoupdate(manifest: dict, version: str, matches: dict):
-    """按 autoupdate 配置改写 manifest 的 version/url/hash。返回是否发生变更。"""
+    """按 autoupdate 配置改写 manifest 的 version/url/hash/extract_dir。
+
+    关键：autoupdate 块是模板，渲染结果必须**写回 manifest 的顶层或
+    architecture 对应块**——scoop 安装时读的是 architecture 里的 url/hash。
+    """
     autoupdate = manifest.get("autoupdate")
     if not autoupdate:
         raise ValueError("manifest 缺少 autoupdate")
 
     clean = clean_version(version)
-    if autoupdate.get("url") or autoupdate.get("hash"):
+
+    def _sync(src: dict, dst: dict):
+        for k in ("url", "hash", "extract_dir"):
+            if k in src:
+                dst[k] = src[k]
+
+    if autoupdate.get("url") or autoupdate.get("hash") or autoupdate.get("extract_dir"):
         _apply_entry(autoupdate, version, clean, matches)
+        _sync(autoupdate, manifest)
+
     for arch, entry in (autoupdate.get("architecture") or {}).items():
         if isinstance(entry, dict):
             _apply_entry(entry, version, clean, matches)
+            arch_manifest = manifest.setdefault("architecture", {}).setdefault(arch, {})
+            _sync(entry, arch_manifest)
+
     manifest["version"] = version
 
 

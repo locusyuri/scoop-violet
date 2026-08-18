@@ -13,6 +13,7 @@
 | [wemd](https://wemd.app) | 1.4.4 | 更优雅的 Markdown 公众号排版工具（NSIS 安装到 scoop 目录，数据保存在 %APPDATA%\WeMD） |
 | [fanqie-novel-downloader](https://github.com/POf-L/Fanqie-novel-Downloader) | 2026.8.18-538-r672 | 番茄小说下载器（免费番茄小说转 TXT/EPUB GUI 工具，Tauri 应用） |
 | [dbx](https://github.com/t8y2/dbx) | 0.5.88 | 轻量级跨平台数据库客户端（80+ 数据库，数据保存在 scoop persist 目录） |
+| [opskat](https://github.com/opskat/opskat) | 1.13.0 | AI 驱动的运维资产管理平台（SSH/RDP/VNC/数据库/K8s/Redis 等，数据保存在 scoop persist 目录） |
 
 ## 使用方法
 

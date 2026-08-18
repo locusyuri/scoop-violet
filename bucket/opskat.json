@@ -1,0 +1,49 @@
+{
+    "version": "1.13.0",
+    "description": "AI 驱动的运维资产管理平台，支持 SSH/RDP/VNC/数据库/K8s/Redis 等 80+ 资产类型",
+    "homepage": "https://github.com/opskat/opskat",
+    "license": "GPL-3.0",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/opskat/opskat/releases/download/v1.13.0/opskat-v1.13.0-windows-amd64-portable.zip",
+            "hash": "d703d3642cc010254b7ca6e8f46520bbe6275f3c7d8e2c04f96f7fce5c332307",
+            "extract_dir": "opskat-v1.13.0-windows-amd64"
+        }
+    },
+    "bin": [
+        [
+            "opskat.exe",
+            "opskat"
+        ],
+        [
+            "opsctl.exe",
+            "opskat-opsctl"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "opskat.exe",
+            "Opskat"
+        ]
+    ],
+    "persist": "data",
+    "notes": [
+        "便携版数据保存在 scoop persist 目录（scoop\\persist\\opskat\\data），更新/卸载均保留。",
+        "数据目录遵循 portable 模式约定：exe 旁的 data/（源码 bootstrap.AppDataDir）。"
+    ],
+    "checkver": {
+        "github": "opskat/opskat"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/opskat/opskat/releases/download/v$version/opskat-v$version-windows-amd64-portable.zip",
+                "extract_dir": "opskat-v$version-windows-amd64",
+                "hash": {
+                    "url": "https://github.com/opskat/opskat/releases/expanded_assets/v$version",
+                    "regex": "aria-label=\"Copy to clipboard digest for opskat-v$version-windows-amd64-portable\\.zip\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
+                }
+            }
+        }
+    }
+}
