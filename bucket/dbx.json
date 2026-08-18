@@ -1,0 +1,53 @@
+{
+    "version": "0.5.88",
+    "description": "轻量级跨平台数据库客户端，支持 MySQL、PostgreSQL、SQLite、Redis、MongoDB、DuckDB、ClickHouse、SQL Server 等 80+ 数据库",
+    "homepage": "https://github.com/t8y2/dbx",
+    "license": "AGPL-3.0-only",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/t8y2/dbx/releases/download/v0.5.88/DBX_0.5.88_x64-portable.zip",
+            "hash": "e4d5f88947fcb7022dca317597d58c50dd5298f7d7860069383e60a927d2c887"
+        },
+        "arm64": {
+            "url": "https://github.com/t8y2/dbx/releases/download/v0.5.88/DBX_0.5.88_arm64-portable.zip",
+            "hash": "a9a21a251bf7addebb96330045923510952bfd41eaeb8223432982f08672d188"
+        }
+    },
+    "bin": "DBX.exe",
+    "shortcuts": [
+        [
+            "DBX.exe",
+            "DBX"
+        ]
+    ],
+    "env_set": {
+        "DBX_DATA_DIR": "$dir\\data"
+    },
+    "persist": "data",
+    "notes": [
+        "数据保存在 scoop 的 persist 目录（scoop\\persist\\dbx\\data），更新/卸载均保留：",
+        "  环境变量 DBX_DATA_DIR 已指向 $dir\\data（persist 链接）。",
+        "如之前用过旧版且数据在 %APPDATA%\\com.dbx.app，请将其内容复制到 persist 目录以迁移。"
+    ],
+    "checkver": {
+        "github": "t8y2/dbx"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/t8y2/dbx/releases/download/v$version/DBX_$version_x64-portable.zip",
+                "hash": {
+                    "url": "https://github.com/t8y2/dbx/releases/expanded_assets/v$version",
+                    "regex": "aria-label=\"Copy to clipboard digest for DBX_$version_x64-portable\\.zip\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
+                }
+            },
+            "arm64": {
+                "url": "https://github.com/t8y2/dbx/releases/download/v$version/DBX_$version_arm64-portable.zip",
+                "hash": {
+                    "url": "https://github.com/t8y2/dbx/releases/expanded_assets/v$version",
+                    "regex": "aria-label=\"Copy to clipboard digest for DBX_$version_arm64-portable\\.zip\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
+                }
+            }
+        }
+    }
+}

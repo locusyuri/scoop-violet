@@ -152,6 +152,7 @@ def _fetch_hash(hash_conf, version: str, clean: str, matches: dict) -> str:
     regex = hash_conf.get("regex", "")
     if regex == "$sha256":
         return content.strip().split()[0]
+    regex = render(regex, version, clean, matches)  # regex 同样支持模板变量
     m = re.search(regex, content)
     if not m:
         raise ValueError(f"autoupdate hash regex 未匹配: {regex}")

@@ -12,6 +12,7 @@
 | [atomcode](https://atomgit.com/atomgit_atomcode/atomcode) | 5.0.6 | 开源终端 AI 编程助手（安装时自动关闭其内置自更新，交由 scoop 统一管理） |
 | [wemd](https://wemd.app) | 1.4.4 | 更优雅的 Markdown 公众号排版工具（NSIS 安装到 scoop 目录，数据保存在 %APPDATA%\WeMD） |
 | [fanqie-novel-downloader](https://github.com/POf-L/Fanqie-novel-Downloader) | 2026.8.18-538-r672 | 番茄小说下载器（免费番茄小说转 TXT/EPUB GUI 工具，Tauri 应用） |
+| [dbx](https://github.com/t8y2/dbx) | 0.5.88 | 轻量级跨平台数据库客户端（80+ 数据库，数据保存在 scoop persist 目录） |
 
 ## 使用方法
 
