@@ -28,6 +28,12 @@
             "FanqieNovelDownloader"
         ]
     ],
+    "notes": [
+        "数据目录（卸载时保留）：",
+        "  %APPDATA%\\com.pofl.fanqienoveldownloader  —— 账号 cookies、离线书籍、应用状态",
+        "  %LOCALAPPDATA%\\com.pofl.fanqienoveldownloader —— WebView 缓存（可重建）",
+        "备份账号与离线书籍只需复制 Roaming 下的数据目录。"
+    ],
     "checkver": {
         "url": "https://api.github.com/repos/POf-L/Fanqie-novel-Downloader/releases/latest",
         "regex": "\"tag_name\"\\s*:\\s*\"unsigned-v(?P<version>[\\d.]+-[\\d]+-r[\\d]+)\""
