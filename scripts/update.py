@@ -137,13 +137,14 @@ def _repo_from_homepage(manifest: dict) -> str:
 
 # ── autoupdate 应用 ─────────────────────────────────────────────────────
 
-def _fetch_hash(hash_conf) -> str:
-    """按 hash 配置抓取校验值。"""
+def _fetch_hash(hash_conf, version: str, clean: str, matches: dict) -> str:
+    """按 hash 配置抓取校验值。url 支持 $version/$cleanVersion/$match<Name> 模板。"""
     if isinstance(hash_conf, str):
         return hash_conf  # 固定值，无法自动更新
     url = hash_conf.get("url")
     if not url:
         raise ValueError("autoupdate hash 缺少 url")
+    url = render(url, version, clean, matches)
     content = fetch(url)
     if hash_conf.get("jsonpath"):
         data = json.loads(content)
@@ -163,7 +164,7 @@ def _apply_entry(entry: dict, version: str, clean: str, matches: dict):
         entry["url"] = render(entry["url"], version, clean, matches)
     hash_conf = entry.get("hash")
     if isinstance(hash_conf, dict):
-        entry["hash"] = _fetch_hash(hash_conf)
+        entry["hash"] = _fetch_hash(hash_conf, version, clean, matches)
 
 
 def apply_autoupdate(manifest: dict, version: str, matches: dict):
