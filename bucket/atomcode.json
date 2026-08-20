@@ -5,8 +5,8 @@
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://atomgit.com/atomgit_atomcode/atomcode/releases/download/v5.0.7/atomcode-v5.0.7-windows-x64.exe#/atomcode.exe",
-            "hash": "cf84ef0a91b71661d0408a9497950913b6e5b641d87882406ae89c6eb3da25bd"
+            "url": "https://atomgit.com/atomgit_atomcode/atomcode/releases/download/v5.0.8/atomcode-v5.0.8-windows-x64.exe#/atomcode.exe",
+            "hash": "3169935c5172ee1cbf0b926be3b3944137df1c79a873291f64c5422a5fc01dae"
         }
     },
     "bin": "atomcode.exe",
@@ -24,8 +24,11 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://atomgit.com/atomgit_atomcode/atomcode/releases/download/v5.0.7/atomcode-v5.0.7-windows-x64.exe#/atomcode.exe",
-                "hash": "cf84ef0a91b71661d0408a9497950913b6e5b641d87882406ae89c6eb3da25bd"
+                "url": "https://atomgit.com/atomgit_atomcode/atomcode/releases/download/v$version/atomcode-v$version-windows-x64.exe#/atomcode.exe",
+                "hash": {
+                    "url": "https://raw.atomgit.com/atomgit_atomcode/atomcode/raw/main/latest.json",
+                    "jsonpath": "$.binaries['windows-x64'].sha256"
+                }
             }
         }
     }

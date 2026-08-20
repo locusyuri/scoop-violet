@@ -1,16 +1,16 @@
 {
-    "version": "0.5.89",
+    "version": "0.5.90",
     "description": "轻量级跨平台数据库客户端，支持 MySQL、PostgreSQL、SQLite、Redis、MongoDB、DuckDB、ClickHouse、SQL Server 等 80+ 数据库",
     "homepage": "https://github.com/t8y2/dbx",
     "license": "AGPL-3.0-only",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/t8y2/dbx/releases/download/v0.5.89/DBX_0.5.89_x64-portable.zip",
-            "hash": "2c2b8690d8c1cb78b28d06e77bbb71cb031d78bb27aeba09b32c2ef6dc73a46d"
+            "url": "https://github.com/t8y2/dbx/releases/download/v0.5.90/DBX_0.5.90_x64-portable.zip",
+            "hash": "51bcc869bd8f2ffd4afa6fa6e185c1673d71493da41418207929600b80c3ef89"
         },
         "arm64": {
-            "url": "https://github.com/t8y2/dbx/releases/download/v0.5.89/DBX_0.5.89_arm64-portable.zip",
-            "hash": "4341e2477c3d85cd2de4cc1d147c78010ebd5c3df35ce8ab138fb566139a7cd0"
+            "url": "https://github.com/t8y2/dbx/releases/download/v0.5.90/DBX_0.5.90_arm64-portable.zip",
+            "hash": "914d0b23bc96a1d5a697385e5e2d0c8ca067bf8a8305f1a50a6fca84f40769c5"
         }
     },
     "bin": "DBX.exe",
@@ -35,18 +35,12 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/t8y2/dbx/releases/download/v$version/DBX_$version_x64-portable.zip",
-                "hash": {
-                    "url": "https://github.com/t8y2/dbx/releases/expanded_assets/v$version",
-                    "regex": "aria-label=\"Copy to clipboard digest for DBX_$version_x64-portable\\.zip\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
-                }
+                "url": "https://github.com/t8y2/dbx/releases/download/v0.5.90/DBX_0.5.90_x64-portable.zip",
+                "hash": "51bcc869bd8f2ffd4afa6fa6e185c1673d71493da41418207929600b80c3ef89"
             },
             "arm64": {
-                "url": "https://github.com/t8y2/dbx/releases/download/v$version/DBX_$version_arm64-portable.zip",
-                "hash": {
-                    "url": "https://github.com/t8y2/dbx/releases/expanded_assets/v$version",
-                    "regex": "aria-label=\"Copy to clipboard digest for DBX_$version_arm64-portable\\.zip\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
-                }
+                "url": "https://github.com/t8y2/dbx/releases/download/v0.5.90/DBX_0.5.90_arm64-portable.zip",
+                "hash": "914d0b23bc96a1d5a697385e5e2d0c8ca067bf8a8305f1a50a6fca84f40769c5"
             }
         }
     }
