@@ -24,6 +24,8 @@ checkver / autoupdate（见 wiki/SPEC.md），无需为本软件编写专用脚�
 import json
 import re
 import sys
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -32,11 +34,23 @@ GITHUB_API = "https://api.github.com/repos"
 
 # ── 基础工具 ────────────────────────────────────────────────────────────
 
-def fetch(url: str, timeout: int = 30) -> str:
-    """抓取 URL 文本。"""
-    req = urllib.request.Request(url, headers={"User-Agent": "scoop-violet-updater"})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return resp.read().decode("utf-8", errors="replace")
+def fetch(url: str, timeout: int = 30, retries: int = 3) -> str:
+    """抓取 URL 文本；对 429/5xx 等瞬态错误做指数退避重试（2s/4s）。"""
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "scoop-violet-updater"})
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.read().decode("utf-8", errors="replace")
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 500, 502, 503, 504) and attempt < retries - 1:
+                time.sleep(2 * (attempt + 1))
+                continue
+            raise
+        except (urllib.error.URLError, TimeoutError):
+            if attempt < retries - 1:
+                time.sleep(2 * (attempt + 1))
+                continue
+            raise
 
 
 def json_path(data, expr: str):
