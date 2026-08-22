@@ -173,22 +173,25 @@ def _fetch_hash(hash_conf, version: str, clean: str, matches: dict) -> str:
     return m.group(1) if m.groups() else m.group(0)
 
 
-def _apply_entry(entry: dict, version: str, clean: str, matches: dict):
-    """渲染单条 url/extract_dir/hash 配置（可能是顶层，或 architecture 下某架构）。"""
-    if entry.get("url"):
-        entry["url"] = render(entry["url"], version, clean, matches)
-    if entry.get("extract_dir"):
-        entry["extract_dir"] = render(entry["extract_dir"], version, clean, matches)
-    hash_conf = entry.get("hash")
+def _render_entry(entry: dict, version: str, clean: str, matches: dict) -> dict:
+    """渲染单条 url/extract_dir/hash 配置，返回渲染后的副本（不改原配置）。"""
+    rendered = dict(entry)
+    if rendered.get("url"):
+        rendered["url"] = render(rendered["url"], version, clean, matches)
+    if rendered.get("extract_dir"):
+        rendered["extract_dir"] = render(rendered["extract_dir"], version, clean, matches)
+    hash_conf = rendered.get("hash")
     if isinstance(hash_conf, dict):
-        entry["hash"] = _fetch_hash(hash_conf, version, clean, matches)
+        rendered["hash"] = _fetch_hash(hash_conf, version, clean, matches)
+    return rendered
 
 
 def apply_autoupdate(manifest: dict, version: str, matches: dict):
     """按 autoupdate 配置改写 manifest 的 version/url/hash/extract_dir。
 
-    关键：autoupdate 块是模板，渲染结果必须**写回 manifest 的顶层或
-    architecture 对应块**——scoop 安装时读的是 architecture 里的 url/hash。
+    关键：autoupdate 块是模板，渲染结果**只写回** manifest 的顶层或
+    architecture 对应块——autoupdate 块本身保持模板不变，否则下次更新时
+    模板已被具体版本号替换，永远无法再更新（曾因此导致 url 停留在旧版）。
     """
     autoupdate = manifest.get("autoupdate")
     if not autoupdate:
@@ -196,20 +199,19 @@ def apply_autoupdate(manifest: dict, version: str, matches: dict):
 
     clean = clean_version(version)
 
-    def _sync(src: dict, dst: dict):
-        for k in ("url", "hash", "extract_dir"):
-            if k in src:
-                dst[k] = src[k]
-
     if autoupdate.get("url") or autoupdate.get("hash") or autoupdate.get("extract_dir"):
-        _apply_entry(autoupdate, version, clean, matches)
-        _sync(autoupdate, manifest)
+        rendered = _render_entry(autoupdate, version, clean, matches)
+        for k in ("url", "hash", "extract_dir"):
+            if k in rendered:
+                manifest[k] = rendered[k]
 
     for arch, entry in (autoupdate.get("architecture") or {}).items():
         if isinstance(entry, dict):
-            _apply_entry(entry, version, clean, matches)
+            rendered = _render_entry(entry, version, clean, matches)
             arch_manifest = manifest.setdefault("architecture", {}).setdefault(arch, {})
-            _sync(entry, arch_manifest)
+            for k in ("url", "hash", "extract_dir"):
+                if k in rendered:
+                    arch_manifest[k] = rendered[k]
 
     manifest["version"] = version
 

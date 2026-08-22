@@ -26,7 +26,10 @@
         "github": "tenngoxars/WeMD"
     },
     "autoupdate": {
-        "url": "https://github.com/tenngoxars/WeMD/releases/download/v1.5.0/WeMD.Setup.1.5.0.exe#/setup.exe",
-        "hash": "fd39c729175147cdbfb42822886a4fde0c617b7ae348c48efa58d92be5e30cac"
+        "url": "https://github.com/tenngoxars/WeMD/releases/download/v$version/WeMD.Setup.$version.exe#/setup.exe",
+        "hash": {
+            "url": "https://github.com/tenngoxars/WeMD/releases/expanded_assets/v$version",
+            "regex": "WeMD Setup $version\\.exe[\\s\\S]*?sha256:([a-f0-9]{64})"
+        }
     }
 }

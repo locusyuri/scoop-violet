@@ -35,12 +35,18 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/t8y2/dbx/releases/download/v0.5.90/DBX_0.5.90_x64-portable.zip",
-                "hash": "51bcc869bd8f2ffd4afa6fa6e185c1673d71493da41418207929600b80c3ef89"
+                "url": "https://github.com/t8y2/dbx/releases/download/v$version/DBX_$version_x64-portable.zip",
+                "hash": {
+                    "url": "https://github.com/t8y2/dbx/releases/expanded_assets/v$version",
+                    "regex": "aria-label=\"Copy to clipboard digest for DBX_$version_x64-portable\\.zip\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
+                }
             },
             "arm64": {
-                "url": "https://github.com/t8y2/dbx/releases/download/v0.5.90/DBX_0.5.90_arm64-portable.zip",
-                "hash": "914d0b23bc96a1d5a697385e5e2d0c8ca067bf8a8305f1a50a6fca84f40769c5"
+                "url": "https://github.com/t8y2/dbx/releases/download/v$version/DBX_$version_arm64-portable.zip",
+                "hash": {
+                    "url": "https://github.com/t8y2/dbx/releases/expanded_assets/v$version",
+                    "regex": "aria-label=\"Copy to clipboard digest for DBX_$version_arm64-portable\\.zip\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
+                }
             }
         }
     }

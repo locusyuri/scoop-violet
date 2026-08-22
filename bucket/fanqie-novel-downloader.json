@@ -41,12 +41,18 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/POf-L/Fanqie-novel-Downloader/releases/download/v2026.8.21-510/FanqieNovelDownloader-tauri-windows-x64-setup.exe#/dl.7z",
-                "hash": "8c45929107ae043c08098ce6b50abbbb0c2c117cec7b9fb95d9ac4865b663537"
+                "url": "https://github.com/POf-L/Fanqie-novel-Downloader/releases/download/v$version/FanqieNovelDownloader-tauri-windows-x64-setup.exe#/dl.7z",
+                "hash": {
+                    "url": "https://github.com/POf-L/Fanqie-novel-Downloader/releases/expanded_assets/v$version",
+                    "regex": "aria-label=\"Copy to clipboard digest for FanqieNovelDownloader-tauri-windows-x64-setup\\.exe\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
+                }
             },
             "arm64": {
-                "url": "https://github.com/POf-L/Fanqie-novel-Downloader/releases/download/v2026.8.21-510/FanqieNovelDownloader-tauri-windows-arm64-setup.exe#/dl.7z",
-                "hash": "d4f6218eae12464d2656e11a81774c1a16f4530f42bf3eaa62ba7e94191779e4"
+                "url": "https://github.com/POf-L/Fanqie-novel-Downloader/releases/download/v$version/FanqieNovelDownloader-tauri-windows-arm64-setup.exe#/dl.7z",
+                "hash": {
+                    "url": "https://github.com/POf-L/Fanqie-novel-Downloader/releases/expanded_assets/v$version",
+                    "regex": "aria-label=\"Copy to clipboard digest for FanqieNovelDownloader-tauri-windows-arm64-setup\\.exe\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
+                }
             }
         }
     }

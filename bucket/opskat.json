@@ -37,9 +37,12 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/opskat/opskat/releases/download/v1.13.1/opskat-v1.13.1-windows-amd64-portable.zip",
-                "extract_dir": "opskat-v1.13.1-windows-amd64",
-                "hash": "7dfb2b7baa5f3b42876d60da1f18e4afbf53ecdc32cca80f3c001553723780b9"
+                "url": "https://github.com/opskat/opskat/releases/download/v$version/opskat-v$version-windows-amd64-portable.zip",
+                "extract_dir": "opskat-v$version-windows-amd64",
+                "hash": {
+                    "url": "https://github.com/opskat/opskat/releases/expanded_assets/v$version",
+                    "regex": "aria-label=\"Copy to clipboard digest for opskat-v$version-windows-amd64-portable\\.zip\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
+                }
             }
         }
     }
