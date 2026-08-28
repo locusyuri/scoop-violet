@@ -1,12 +1,12 @@
 {
-    "version": "5.0.8",
+    "version": "5.0.9",
     "description": "Open-source terminal AI coding agent.",
     "homepage": "https://atomgit.com/atomgit_atomcode/atomcode",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://atomgit.com/atomgit_atomcode/atomcode/releases/download/v5.0.8/atomcode-v5.0.8-windows-x64.exe#/atomcode.exe",
-            "hash": "3169935c5172ee1cbf0b926be3b3944137df1c79a873291f64c5422a5fc01dae"
+            "url": "https://atomgit.com/atomgit_atomcode/atomcode/releases/download/v5.0.9/atomcode-v5.0.9-windows-x64.exe#/atomcode.exe",
+            "hash": "c24792fea28ea6c6e75e7f460e9242d97db032b138ef57a20d11588540b95b8e"
         }
     },
     "bin": "atomcode.exe",
