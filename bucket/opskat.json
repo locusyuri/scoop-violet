@@ -1,13 +1,13 @@
 {
-    "version": "1.13.1",
+    "version": "1.13.2",
     "description": "AI 驱动的运维资产管理平台，支持 SSH/RDP/VNC/数据库/K8s/Redis 等 80+ 资产类型",
     "homepage": "https://github.com/opskat/opskat",
     "license": "GPL-3.0",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/opskat/opskat/releases/download/v1.13.1/opskat-v1.13.1-windows-amd64-portable.zip",
-            "hash": "7dfb2b7baa5f3b42876d60da1f18e4afbf53ecdc32cca80f3c001553723780b9",
-            "extract_dir": "opskat-v1.13.1-windows-amd64"
+            "url": "https://github.com/opskat/opskat/releases/download/v1.13.2/opskat-v1.13.2-windows-amd64-portable.zip",
+            "hash": "9e6490c3bbd9645b1699a42f63ab23b2e503c590f640c8d28ecdcbb95deb9be8",
+            "extract_dir": "opskat-v1.13.2-windows-amd64"
         }
     },
     "bin": [
