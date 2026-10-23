@@ -1,16 +1,16 @@
 {
-    "version": "0.6.51",
+    "version": "0.6.52",
     "description": "轻量级跨平台数据库客户端，支持 MySQL、PostgreSQL、SQLite、Redis、MongoDB、DuckDB、ClickHouse、SQL Server 等 80+ 数据库",
     "homepage": "https://github.com/t8y2/dbx",
     "license": "AGPL-3.0-only",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/t8y2/dbx/releases/download/v0.6.51/DBX_0.6.51_x64-portable.zip",
-            "hash": "3ae82bcfb2044cd7e112fd13951ff662b2678a48f923378c7ee85821c8dc14d8"
+            "url": "https://github.com/t8y2/dbx/releases/download/v0.6.52/DBX_0.6.52_x64-portable.zip",
+            "hash": "7d1c26c1661fa95cd8f007d9b68136757a1f941efb33d64638325c18b7083088"
         },
         "arm64": {
-            "url": "https://github.com/t8y2/dbx/releases/download/v0.6.51/DBX_0.6.51_arm64-portable.zip",
-            "hash": "925d91c081532f61aca3e28d33d515be43d051a4caac2fae24e433db911563e5"
+            "url": "https://github.com/t8y2/dbx/releases/download/v0.6.52/DBX_0.6.52_arm64-portable.zip",
+            "hash": "84a09f5ac66d54506bda41212d8ceac7f9ab16ee5392ad85ecf5b0b1783101c4"
         }
     },
     "bin": "DBX.exe",
