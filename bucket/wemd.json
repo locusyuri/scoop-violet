@@ -1,10 +1,10 @@
 {
-    "version": "1.5.5",
+    "version": "1.6.0",
     "description": "更优雅的 Markdown 公众号排版工具",
     "homepage": "https://wemd.app",
     "license": "MIT",
-    "url": "https://github.com/tenngoxars/WeMD/releases/download/v1.5.5/WeMD.Setup.1.5.5.exe#/setup.exe",
-    "hash": "c283198d2407eff2aee18cc735fb5a901d7902227a872c5ec84946982edcadc3",
+    "url": "https://github.com/tenngoxars/WeMD/releases/download/v1.6.0/WeMD.Setup.1.6.0.exe#/setup.exe",
+    "hash": "04de47d02b33002b336d5ea9e8b286531979f467be322dcf9f8693edc8b4994e",
     "installer": {
         "script": "Start-Process -Wait -FilePath \"$dir\\setup.exe\" -ArgumentList \"/S /D=$dir\""
     },
