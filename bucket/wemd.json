@@ -1,35 +1,35 @@
 {
-    "version": "1.6.1",
+    "version": "2.0.0",
     "description": "更优雅的 Markdown 公众号排版工具",
     "homepage": "https://wemd.app",
     "license": "MIT",
-    "url": "https://github.com/tenngoxars/WeMD/releases/download/v1.6.1/WeMD.Setup.1.6.1.exe#/setup.exe",
-    "hash": "f24ab15d0ad5e7f9c49dbc8a3d4e06d1fc22bc43c0bb52bf5f8c44b7f7ab8947",
-    "installer": {
-        "script": "Start-Process -Wait -FilePath \"$dir\\setup.exe\" -ArgumentList \"/S /D=$dir\""
-    },
-    "uninstaller": {
-        "script": "Start-Process -Wait -FilePath \"$dir\\Uninstall WeMD.exe\" -ArgumentList \"/S _?=$dir\""
-    },
-    "bin": "WeMD.exe",
+    "url": "https://github.com/tenngoxars/WeMD/releases/download/v2.0.0/WeMD_2.0.0_x64-setup.exe#/dl.7z",
+    "hash": "bd9451b24ddafe3e9538db41f7d449692cb5e01ff31bed17a81b36cd7694ee66",
+    "pre_install": "Remove-Item \"$dir\\`$*\", \"$dir\\uninst*\" -Force -Recurse",
+    "bin": [
+        [
+            "wemd-desktop.exe",
+            "WeMD"
+        ]
+    ],
     "shortcuts": [
         [
-            "WeMD.exe",
+            "wemd-desktop.exe",
             "WeMD"
         ]
     ],
     "notes": [
-        "WeMD 数据目录固定为 %APPDATA%\\WeMD，卸载时不会删除，请放心。",
-        "本应用通过 NSIS 安装器安装到 scoop 目录，更新由 scoop 统一管理。"
+        "WeMD 2.x 基于 Tauri，数据目录为 %APPDATA%\\app.wemd.desktop，卸载时不会删除，请放心。",
+        "本应用以解包方式安装（NSIS 安装包解压为便携版），更新由 scoop 统一管理。"
     ],
     "checkver": {
         "github": "tenngoxars/WeMD"
     },
     "autoupdate": {
-        "url": "https://github.com/tenngoxars/WeMD/releases/download/v$version/WeMD.Setup.$version.exe#/setup.exe",
+        "url": "https://github.com/tenngoxars/WeMD/releases/download/v$version/WeMD_$version_x64-setup.exe#/dl.7z",
         "hash": {
             "url": "https://github.com/tenngoxars/WeMD/releases/expanded_assets/v$version",
-            "regex": "WeMD Setup $version\\.exe[\\s\\S]*?sha256:([a-f0-9]{64})"
+            "regex": "aria-label=\"Copy to clipboard digest for WeMD_$version_x64-setup\\.exe\"[^>]*?value=\"sha256:([a-f0-9]{64})\""
         }
     }
 }

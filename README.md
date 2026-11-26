@@ -10,7 +10,7 @@
 | 应用 | 版本 | 说明 |
 | --- | --- | --- |
 | [atomcode](https://atomgit.com/atomgit_atomcode/atomcode) | 5.0.8 | 开源终端 AI 编程助手（安装时自动关闭其内置自更新，交由 scoop 统一管理） |
-| [wemd](https://wemd.app) | 1.5.0 | 更优雅的 Markdown 公众号排版工具（NSIS 安装到 scoop 目录，数据保存在 %APPDATA%\WeMD） |
+| [wemd](https://wemd.app) | 2.0.0 | 更优雅的 Markdown 公众号排版工具（2.x 起为 Tauri 应用，NSIS 安装包解包为便携版，数据保存在 %APPDATA%\app.wemd.desktop） |
 | [fanqie-novel-downloader](https://github.com/POf-L/Fanqie-novel-Downloader) | 2026.8.25-1555-r677 | 番茄小说下载器（免费番茄小说转 TXT/EPUB GUI 工具，Tauri 应用） |
 | [dbx](https://github.com/t8y2/dbx) | 0.5.97 | 轻量级跨平台数据库客户端（80+ 数据库，数据保存在 scoop persist 目录） |
 | [opskat](https://github.com/opskat/opskat) | 1.13.1 | AI 驱动的运维资产管理平台（SSH/RDP/VNC/数据库/K8s/Redis 等，数据保存在 scoop persist 目录） |
